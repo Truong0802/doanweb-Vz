@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="~/Content/css/admin-index.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        @*<span class="icon"><ion-icon name="storefront"></ion-icon></span>*@
+                        <img src="~/Content/images/vz tách nền.jpg" width="80" />
+                        <span class="title">Vz</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("ThongKe","ThongKe")">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Trang chủ</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Customer")">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Khách hàng</span>
+                    </a>
+                </li>
+                @if (Session["NhanVienCapCao"] != null)
+                {
+
+                    <li>
+                        <a href="@Url.Action("Index","NhanVien")">
+                            <span class="icon"><ion-icon name="man-outline"></ion-icon></span>
+                            <span class="title">Nhân Viên</span>
+                        </a>
+                    </li>
+                }
+                else if (Session["NhanVienCapThap"] != null)
+                {
+
+                }
+
+                <li>
+                    <a href="@Url.Action("DanhSachDanhMuc","TypeProductAdmin")">
+                        <span class="icon"><ion-icon name="reorder-four-outline"></ion-icon></span>
+                        <span class="title">Danh mục sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("DanhSachThuongHieu","TypeProductAdmin")">
+                        <span class="icon"><ion-icon name="reorder-four-outline"></ion-icon></span>
+                        <span class="title">Thương hiệu sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Products")">
+                        <span class="icon"><i class='bx bx-box'></i></span>
+                        <span class="title">Sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("DangXuat", "Account", new { @outURL = Request.Url.ToString() })">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- <div class="search">
+                    <label>
+                        <input type="text" placeholder = "Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div> -->
+            </div>
+
+            <!-- cards -->
+
+            @RenderBody()
+            <!-- order detail list -->
+            <!-- order detail list -->
+
+        </div>
+    </div>
+    <script src="~/Content/js/admin-script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @RenderSection("upload", required: false)
+    @RenderSection("uploadct1", required: false)
+    @RenderSection("uploadct2", required: false)
+    @RenderSection("uploadct3", required: false)
+    @RenderSection("uploadct4", required: false)
+</body>
+</html>

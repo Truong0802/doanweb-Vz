@@ -1,0 +1,255 @@
+﻿@model doanweb.Models.TAI_KHOAN
+
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = null;
+}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        width: 100%;
+        background-color: #f2f3f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px
+    }
+
+    .signup {
+        padding: 90px 75px;
+        background-color: #fff;
+        width: 100%;
+        max-width: 600px;
+        border-radius: 20px;
+    }
+
+    .signup-heading {
+        font-size: 40px;
+        font-weight: bold;
+        color: #373941;
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .signup-social {
+        padding: 10px;
+        border-radius: 20px;
+        display: block;
+        width: 100%;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        border: 0;
+        background-color: #4c6ff4;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 5px 10px 0 rgba(76, 111, 244, 0.5);
+        margin-bottom: 30px;
+    }
+
+    .signup-social-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #4c6ff4;
+        font-size: 35px;
+    }
+
+    .signup-social-text {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .signup-or {
+        text-align: center;
+        font-style: 20px;
+        color: #999;
+        margin: 55px;
+        position: relative;
+    }
+
+        .signup-or span {
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signup-or:after {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: #999;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translatey(-50%);
+        }
+
+    .signup-label {
+        font-size: 16px;
+        color: #373941;
+        margin-bottom: 10px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .signup-input {
+        display: block;
+        width: 100%;
+        padding: 25px;
+        border-radius: 20px;
+        background-color: #f2f3f5;
+        outline: none;
+        border: 0;
+        font-size: 18px;
+        margin-bottom: 30px;
+        color: rgb(145, 142, 142)
+    }
+
+    .signup-submit {
+        padding: 25px;
+        font-size: 20px;
+        text-align: center;
+        border: 0;
+        outline: none;
+        display: inline-block;
+        width: 100%;
+        color: #fff;
+        border-radius: 20px;
+        background-color: rgb(130, 201, 30);
+        box-shadow: 0 5px 10px 0 rgba(130, 201, 30, 0.5);
+        margin-top: 25px;
+        cursor: pointer;
+    }
+
+    .signup-already {
+        text-align: center;
+        font-size: 18px;
+        color: #999;
+        margin-top: 10px;
+    }
+
+    .signup-login {
+        color: #2979ff;
+    }
+
+    .password-container {
+        position: relative;
+    }
+
+        .password-container label i {
+            position: absolute;
+            top: 30px;
+            right: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #d3d3d3;
+        }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="signup" id="wrapper">
+        @* <button class="signup-social">
+                <i class="uil uil-google signup-social-icon"></i>
+                <span class="signup-social-text">Login with Google</span>
+            </button>
+            <button class="signup-social">
+                <i class="uil uil-facebook-f signup-social-icon"></i>
+                <span class="signup-social-text">Login with facebook</span>
+            </button>
+
+            <div class="signup-or"><span>OR</span></div>*@
+        <form id="form-login" action="regLogin.php" class="bg-light p-4 my-3" method="post">
+            <h1 class="signup-heading">Đăng nhập</h1>
+            <div class="form-group">
+
+
+                <i class="fa-solid fa-user"></i>
+                <label for="username" class="signup-label">Tài khoản</label>
+                @*<input type="text" name="username" class="signup-input" placeholder="Tên tài khoản" id="username">*@
+                @Html.EditorFor(model => model.TenDangNhapTK, new { htmlAttributes = new { @class = "signup-input" } })
+
+            </div>
+            <div class="form-group">
+                <i class="fa-solid fa-lock"></i>
+                <label for="password" id="password" class="signup-label">Mật khẩu</label>
+                <div class="password-container">
+                    <label>
+                        @* <input type="password" name="password" class="signup-input" id="myInput" placeholder="Mật khẩu">
+                            <i class="fa-solid fa-eye" id="eye" onclick="myFunction()"></i>*@
+                        @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "signup-input" } })
+
+                    </label>
+                </div>
+            </div>
+            @ViewData["LoiDangNhap"]
+            @* <button class="signup-submit" name="btn-reglog">Đăng nhập</button>*@
+            <input type="submit" name="Login" value="Đăng Nhập" class="signup-submit" />
+            <p class="signup-already">
+                <span>Chưa có tài khoản @Html.ActionLink("Đăng ký", "DangKy", new { @class = "signup-login" })</span>
+                @*<a href="signup.html" class="signup-login">Đăng ký</a>*@
+            </p>
+        </form>
+
+    </div>
+    @*<div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <div class="control-label col-md-2">Tên đăng nhập:</div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TenDangNhapTK, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenDangNhapTK, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2">Mật khẩu:</div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Đăng Nhập" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
+}
+
+@*<div>
+        <h5>Chưa có tài khoản? Đến @Html.ActionLink("Đăng ký", "DangKy")</h5>
+    </div>*@
+@section script{
+    <script>
+        $("input[type=submit]").click(function () {
+            if (ViewData["LoiDangNhap"] != null) {
+                alert(ViewData["LoiDangNhap"]);
+            }
+        });
+    </script>
+}

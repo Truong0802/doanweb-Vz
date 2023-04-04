@@ -1,0 +1,90 @@
+﻿@model IEnumerable<doanweb.Models.ThongKe>
+
+@{
+    ViewBag.Title = "ThongKe";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+
+<link href="~/Content/css/admin-index.css" rel="stylesheet" />
+
+<style>
+    .detail{
+        grid-template-columns: 2fr 1fr;
+    }
+</style>
+
+<div class="cardBox">
+    <div class="card">
+        <div>
+            <div class="number">@ViewBag.soluongdaban</div>
+            <div class="cardName">Đã bán</div>
+        </div>
+        <div class="iconBox">
+            <ion-icon name="cart-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+            @if (ViewBag.thunhap != null)
+            {
+                <div class="number">@(String.Format("{0:0,0}",((decimal)ViewBag.thunhap)))</div>
+                <div class="cardName">Thu nhập</div>
+            }
+            else
+            {
+                <div class="number">0</div>
+                <div class="cardName">Thu nhập</div>
+            }
+
+        </div>
+        <div class="iconBox">
+            <ion-icon name="cash-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+
+<!-- order detail list -->
+<div class="detail">
+    <div class="recentOders">
+        <div class="cardHeader">
+            <h2>Recent Oders</h2>
+            <a href="#" class="btn">View All</a>
+        </div>
+       
+            <table>
+                <thead>
+                    <tr>
+                        <td>Mã hóa đơn</td>
+                        <td>Tổng giá</td>
+                        <td>Tình trạng thanh toán</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.mahd</td>
+                            <td>@String.Format("{0:0,0}", item.tonggia)</td>
+                            @if (item.tinhtrangthanhtoan == null)
+                            {
+                               
+                                    <td>Chưa thanh toán</td>
+                                
+
+                            }
+                            else
+                            {
+                                <td>Đã thanh toán</td>
+                            }
+
+                            <td><a href="@Url.Action("Invoice","invoice",new { @mahdid = item.mahd})" class="btn">Chi tiết</a></td>
+                        </tr>
+                    }
+                    </tbody>
+            </table>
+        
+    </div>
+</div>

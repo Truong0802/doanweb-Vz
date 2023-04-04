@@ -1,0 +1,141 @@
+﻿@model IEnumerable<doanweb.Models.KHACH_HANG>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<style>
+    .admin-content {
+        position: relative;
+        display: grid;
+        min-height: 500px;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+
+    table tbody tr td img {
+        padding-top: 20px;
+    }
+
+    .detail {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: none;
+        grid-gap: 30px;
+        /* margin-top: 10px; */
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    button {
+        width: 130px;
+        padding: 7px 7px;
+        background: #287bff;
+        text-decoration: none;
+        color: var(--white);
+        border-radius: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    table thead tr td {
+        font-size: 18px;
+    }
+</style>
+
+<link href="~/Content/css/product-style.css" rel="stylesheet" />
+
+<div class="detail">
+    <div class="admin-content">
+        <div class="recentProducts">
+            <div class="cardHeader">
+                <h2>Danh sách sản phẩm</h2>
+            </div>
+            <br />
+            @*<div class="search">
+                    <label>
+                        <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>*@
+            <div class="search-box">
+                @using (Html.BeginForm("Index", "Customer", FormMethod.Get, new { @class = "form-inline" }))
+                {
+                    @Html.TextBox("searchString", null, new { autocomplete = "off" })
+                    <input type="submit" value="Tìm kiếm" />
+                }
+            </div>
+            <style>
+                .search-box .form-inline {
+                    display: flex;
+                    flex-wrap: nowrap;
+                }
+
+                input[type="text"] {
+                    padding: 10px;
+                    margin: 10px;
+                    width: 300px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    font-size: 16px;
+                    font-family: Arial, sans-serif;
+                }
+
+                input[type="submit"] {
+                    padding: 10px 20px;
+                    margin: 10px;
+                    width: 120px;
+                    background-color: #007bff;
+                    color: #fff;
+                    border-radius: 5px;
+                    border: none;
+                    font-size: 16px;
+                    font-family: Arial, sans-serif;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+
+                    input[type="submit"]:hover {
+                        background-color: #0062cc;
+                    }
+            </style>
+            <br />
+            <table>
+                <thead>
+                    <tr>
+                        <td>Tên đăng nhập</td>
+                        <td>Họ tên khách hàng</td>
+                        <td>Số điện thoại</td>
+                        <td>Địa chỉ</td>
+                        <td>Email</td>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.TenDangNhapTK</td>
+                            <td>@item.HoTenKH</td>
+                            <td>@item.SDT</td>
+                            <td>@item.DiaChi</td>
+                            <td>@item.Email</td>
+                            <td><a href="@Url.Action("Detail", "Customer", new { id = item.MaKH.ToString().TrimEnd() })">Chi tiết</a></td>
+                            <td><a href="@Url.Action("Delete", "Customer", new { id = item.MaKH.ToString().TrimEnd() })">Xóa khách hàng</a></td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+</div>

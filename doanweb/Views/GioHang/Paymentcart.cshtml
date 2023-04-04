@@ -1,0 +1,209 @@
+﻿@model IEnumerable<doanweb.Models.cart>
+
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<link href="~/Content/fonts/fontawesome-free-6.2.1-web/fontawesome-free-6.2.1-web/css/all.css" rel="stylesheet" />
+<style>
+    body {
+        margin: 0;
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        text-align: left;
+        min-height: 100vh;
+        width: 100%;
+        background-color: #f2f3f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px;
+    }
+
+    .detail {
+        position: relative;
+        width: 160%;
+        padding: 20px;
+        display: block;
+        grid-gap: 30px;
+        min-height: 500px;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        margin-left: -150px;
+    }
+
+    .payment-details {
+        width: 360px;
+    }
+
+    .product-detail {
+        width: 355px;
+    }
+
+    .green {
+        color: rgb(15, 207, 143);
+        font-weight: 680;
+    }
+
+    .infomation {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .infomation label {
+            font-size: 18px;
+        }
+
+        .infomation input {
+            width: 100%;
+            height: 40px;
+            border-radius: 5px;
+            padding: 5px 20px;
+            padding-left: 35px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.04);
+        }
+
+    <link href="~/Content/css/payment-style.css" rel="stylesheet" / >
+</style>
+@{
+    doanweb.Models.KHACH_HANG kh = (doanweb.Models.KHACH_HANG)Session["KhachHang"];
+}
+
+<!DOCTYPE html>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <html>
+
+    <div class="detail">
+        <div class="content">
+            <div class="container rounded bg-white">
+                <div class="row d-flex justify-content-center pb-5">
+                    <div class="col-sm-5 col-md-5 ml-1">
+                        <a href="index.html"><img src="/assets/img/logo.png" alt=""></a>
+                        <div class="py-4 d-flex flex-row">
+                            <h5><span class="fa fa-check-square-o"></span><b>Shop name</b> | </h5><span class="pl-2">thanh toán</span>
+                        </div>
+
+
+                        <h4 class="green">@String.Format("{0:0,0}", ViewBag.TongHoaDon)đ</h4>
+
+
+
+                        <div class="infomation">
+
+
+                            <label for="">Họ tên</label>
+                            <input class="inputText" type="text" placeholder="@kh.HoTenKH">
+                            <label for="">Email</label>
+                            <input class="inputText" type="text" placeholder="@kh.Email">
+                            <label for="">Số điện thoại</label>
+                            <input class="inputText" type="text" placeholder="@kh.SDT">
+                            <label for="">Địa chỉ</label>
+                            <input class="inputText" type="text" placeholder="@kh.DiaChi">
+
+                        </div>
+                        <hr>
+                        <div class="pt-2">
+                            <form class="pb-3">
+
+                                <div class="d-flex flex-row align-content-center">
+                                    <div class="pt-2 pr-2"><input type="radio" name="radio1" id="r1" checked></div>
+                                    <div class="rounded d-flex w-100 px-2">
+                                        <div class="pt-2"><p><i class="fas fa-shipping-fast"></i>Thanh toán khi nhận hàng</p></div>
+                                        <div class="ml-auto pt-2">COD</div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <div>
+                                <input type="submit" value="Thanh toán" class="btn btn-primary btn-block">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-4 offset-md-1 mobile ">
+                        <div class="py-4 d-flex justify-content-end">
+
+                            <br />
+                            @*<h6><a href="@Url.Action("HuyDonHang", "GioHang", new { @delid = (Session["HoaDonTam"] as doanweb.Models.HOA_DON).MaHÐ.ToString() })" name="back-cart" class="btn btn-primary btn-block">Hủy đơn hàng</a></h6>*@
+                            <form id='buy-now-payment' method="POST" action="@Url.Action("HuyDonHang", "GioHang", new { @delid = (Session["HoaDonTam"] as doanweb.Models.HOA_DON).MaHÐ.ToString() })">
+                                <br />
+                                @*<h6><a href="@Url.Action("HuyDonHang", "GioHang", new { delid = Html.DisplayFor(modelItem => del.Mahd) })" name="back-cart" class="btn btn-primary btn-block">Hủy đơn hàng</a></h6>*@
+                                <h6><button name="back-cart" class="btn btn-primary btn-block">Hủy đơn hàng</button></h6>
+                            </form>
+
+                        </div>
+                        <div class="bg-light rounded d-flex flex-column payment-details">
+                            <div class="product-detail">
+                                <div class="p-2 ml-3"><h4>Thông tin mua hàng</h4></div>
+                                @foreach (var item in Model)
+                                {
+                                    <div class="p-2 d-flex">
+                                        <div class="col-8">Tên hàng</div>
+                                        <div class="ml-auto">@Html.DisplayFor(modelItem => item.SAN_PHAM.TenSP)</div>
+                                    </div>
+                                    <div class="border-top px-4 mx-3">
+                                    </div>
+                                    <div class="p-2 d-flex pt-3">
+                                        <div class="col-8">Giá sản phẩm</div>
+                                        <div class="ml-auto">@String.Format("{0:0,0}", item.Gia)đ</div>
+                                    </div>
+                                    <div class="p-2 d-flex">
+                                        <div class="col-8">Mã khuyến mãi</div>
+                                        <div class="ml-auto">Không có</div>
+                                    </div>
+                                    <div class="border-top px-4 mx-3"></div>
+                                    <div class="p-2 d-flex pt-3">
+                                        <div class="col-8">Số lượng</div>
+
+                                        <div class="ml-auto"><b>@Html.DisplayFor(modelItem => item.SoluongMua)</b></div>
+
+
+                                    </div>
+                                    <div class="p-2 d-flex">
+                                        <div class="col-8">Số tiền</div>
+
+                                        <div class="ml-auto"><b>@String.Format("{0:0,0}", Html.DisplayFor(modelItem => item.Gia))đ</b></div>
+
+
+                                    </div>
+                                    <div class="p-2 d-flex">
+                                        <div class="col-8">Phí vận chuyển</div>
+                                        <div class="ml-auto"><b>Miễn phí</b></div>
+                                    </div>
+                                    <div class="border-top px-4 mx-3"></div>
+                                    <div class="p-2 d-flex pt-3">
+                                        <div class="col-8"><b>Tổng tiền</b></div>
+
+
+                                        <div class="ml-auto"><b>@String.Format("{0:0,0}", ViewBag.TongHoaDon)đ</b></div>
+
+                                    </div>
+
+                                }
+
+                                @*<label for="">Voucher</label>
+                                    <input class="inputText" name="vouchertxt" type="text"></input>
+                                    <button name="used-voucher-buy-now" class="btn btn-primary btn-block">Sử dụng</button>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
+}
+

@@ -1,0 +1,212 @@
+﻿@using doanweb.Models
+<style>
+    .Card .CardInner .container .Icon {
+        display: flex;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<link href="../../Content/css/style.css" rel="stylesheet" />*@
+    <link href="../../Content/fonts/fontawesome-free-6.2.1-web/fontawesome-free-6.2.1-web/css/all.css" rel="stylesheet" />
+    <title>shop</title>
+</head>
+<body>
+    <header>
+        <section id="header">
+           
+            <img src="~/Content/images/vz tách nền.jpg" width="100" />
+            @using (Html.BeginForm("Productlist", "Home", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                <div class="Card">
+                    <div class="CardInner">
+                        <div class="container">
+                            <div class="Icon">
+                                <input type="Text" class="form-control col-md-10" value="@ViewBag.Keyword" name="searchString" placeholder="Tìm kiếm sản phẩm..." />
+                                <button type="submit" class="btn-search"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#657789" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg></button>
+                            </div>
+                            @*<div class="InputContainer">
+
+                            <input type="submit" class="btn btn-info" value="Tìm " style="margin-left:10px;">
+                        </div>*@
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+            <div>
+                <ul id="navbar">
+                    <li><a class="active" href="@Url.Action("Index","Home")">TRANG CHỦ</a></li>
+                    <li><a href="@Url.Action("Contact","Home")">GIỚI THIỆU</a></li>
+
+                    <li>
+                        <a href="@Url.Action("Productlist","Home")">SẢN PHẨM</a>
+                        @*<ul class="sub-menu">
+
+                            <li><a href=""></a></li>
+                            <ul class="brand">
+                                <li></li>
+                                <li>Logitech</li>
+                                <li>Akko</li>
+                                <li>Leopard</li>
+                            </ul>
+
+                        <li><a href="">Bàn phím máy tính</a></li>
+                        <ul class="brand">
+                            <li>Kit bàn phím</li>
+                            <li>Logitech</li>
+                            <li>Akko</li>
+                            <li>Leopard</li>
+                        </ul>
+                        <li><a href="">Chuột máy tính</a></li>
+                        <ul class="brand">
+                            <li>Asus</li>
+                            <li>Logitech</li>
+                        </ul>
+                        <li><a href="">Lót chuột</a></li>
+                        <ul class="brand">
+                            <li>Dare-u</li>
+                            <li>Corsair</li>
+                        </ul>
+                        <li><a href="">Bàn máy tính</a></li>
+                        <ul class="brand">
+                            <li>Bàn gỗ</li>
+                            <li>E-dra</li>
+                        </ul>
+                        <li><a href="">Ghế ngồi</a></li>
+                        <ul class="brand">
+                            <li>Anda Seat</li>
+                            <li>AK racing</li>
+                        </ul>
+                        <li><a href="">Màn hình máy tính</a></li>
+                        <ul class="brand">
+                            <li>LG</li>
+                            <li>DELL</li>
+                        </ul>
+                        <li><a href="">Tay nâng màn hình</a></li>
+                        <ul class="brand">
+                            <li>North Bayou</li>
+                            <li>Human Motion</li>
+                        </ul>
+                        <li><a href="">Giá đỡ laptop</a></li>
+                        <ul class="brand">
+                            <li>HyperWork</li>
+                            <li>Havit</li>
+                        </ul>
+                        <li><a href="">Webcam</a></li>
+                        <ul class="brand">
+                            <li>Rapoo </li>
+                            <li>Thronmax </li>
+                        </ul>
+                    </ul>*@
+                    </li>
+                    <li><a href="#">CHÍNH SÁCH BẢO HIỂM</a></li>
+                    @if (Session["KhachHang"] == null)
+                    {
+                        if (Session["NhanVien"] == null)
+                        {
+                            <li><a href="@Url.Action("DangNhap","Account")"><i class="fa fa-shopping-bag"></i></a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Action("Index","Home")"><i class="fa fa-shopping-bag"></i></a></li>
+                        }
+                    }
+                    else
+                    {
+                        //Dùng Url.Action để truy cập vào giỏ hàng
+                        <li><a href="@Url.Action("GioHang","GioHang")"><i class="fa fa-shopping-bag"></i></a></li>
+                    }
+
+                    <li>
+                        @if (Session["KhachHang"] == null)
+                        {
+                            //Nếu chưa đăng nhập gì cả
+                            if (Session["NhanVien"] == null)
+                            {
+                                <a href="#"><i class="fa fa-user"></i></a>
+                            }
+                            else //Nếu đăng nhập tài khoản nhân viên
+                            {
+                                //Thay đường dẫn để nối đến trang thống kê của Admin
+                                <a href="@Url.Action("ThongKe","ThongKe")"><i class="fa fa-user"></i></a>
+                            }
+
+                            <ul class="sub-menu-user">
+
+                                @if (Session["NhanVien"] == null)
+                                {
+                                    <li>@Html.ActionLink("Sign up", "DangKy", "Account")</li>
+                                    <li>@Html.ActionLink("Login", "DangNhap", "Account")</li>
+                                }
+                                else
+                                {
+
+                                    <li><a href="@Url.Action("DangXuat", "Account", new { @outURL = Request.Url.ToString() })"> Log out</a></li>
+
+                                }
+
+                            </ul>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("ThongTin","Account", new { @taikhoan = (Session["KhachHang"] as KHACH_HANG).MaKH.ToString().TrimEnd(' ') })"><i class="fa fa-user"></i></a>
+                            <ul class="sub-menu-user">
+                                <li><a href="@Url.Action("DangXuat", "Account", new { @outURL = Request.Url.ToString() })"> Log out</a></li>
+                            </ul>
+                        }
+
+                    </li>
+
+                </ul>
+            </div>
+        </section>
+    </header>
+
+    @RenderBody()
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Cửa hàng</h4>
+                    <ul>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Dịch vụ</a></li>
+                        <li><a href="#">Giấy phép</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Hổ trợ</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                        <li><a href="#">Chính sách bảo hành</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Online Shopping</h4>
+                    <ul>
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Giỏ hàng</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/Content/js/script.js"></script>
+</body>
+</html>

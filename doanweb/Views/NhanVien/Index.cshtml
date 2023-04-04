@@ -1,0 +1,103 @@
+﻿@model IEnumerable<doanweb.Models.NHAN_VIEN>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+<style>
+    .admin-content {
+        position: relative;
+        display: grid;
+        min-height: 500px;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+
+    table tbody tr td img {
+        padding-top: 20px;
+    }
+
+    .detail {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: none;
+        grid-gap: 30px;
+        /* margin-top: 10px; */
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    button {
+        width: 130px;
+        padding: 7px 7px;
+        background: #287bff;
+        text-decoration: none;
+        color: var(--white);
+        border-radius: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    table thead tr td {
+        font-size: 18px;
+    }
+</style>
+
+<link href="~/Content/css/product-style.css" rel="stylesheet" />
+
+<div class="detail">
+    <div class="admin-content">
+        <div class="recentProducts">
+            <div class="cardHeader">
+                <h2>Danh sách Nhân Viên</h2>
+                <a href="@Url.Action("Create", "NhanVien")" class="btn">Thêm nhân viên</a>
+            </div>
+            @*<div class="search">
+                    <label>
+                        <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>*@
+            <br />
+            <table>
+                <thead>
+                    <tr>
+                        <td>Mã nhân viên</td>
+                        <td>Họ tên</td>
+                        <td>Chức vụ</td>
+                        <td>Email</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.MaNV</td>
+                            <td>@item.HoTen</td>
+                            <td>@item.CHUC_VU.ChucVu</td>
+
+                            <td>@item.Email </td>
+
+                            <td><a href="@Url.Action("Edit", "NhanVien", new { id = item.MaNV.ToString().TrimEnd(' ') })">Chi tiết</a></td>
+                            <td><a href="@Url.Action("Delete", "NhanVien", new { id = item.MaNV.ToString().TrimEnd() })">Xóa nhân viên</a></td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+</div>

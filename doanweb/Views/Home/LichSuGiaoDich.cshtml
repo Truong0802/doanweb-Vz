@@ -1,0 +1,45 @@
+﻿@model IEnumerable<doanweb.Models.Lichsugiaodich>
+
+@{
+    ViewBag.Title = "LichSuGiaoDich";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<section id="cart" class="section-p1">
+    <h2>LỊCH SỬ MUA HÀNG</h2>
+    <br />
+    <br />
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Mã hóa đơn</td>
+                <td>Tên sản phẩm</td>
+                <td>Hình ảnh</td>
+                <td>Số lượng</td>
+                <td>Tổng giá</td>
+                <td>Ngày mua</td>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.mahd)</td>
+                    <td>@item.tensp</td>
+                    <td><img src="@item.hinhanh" width="100" alt="thumbnail"></td>
+                    <td>@item.iSoluong</td>
+                    <td>@String.Format("{0:0,0}", item.tonggia)đ</td>
+                    <td>@item.ngaymua</td>
+                    @*<td><input type="submit" value="Cập nhật" class="normal" /></td>*@
+                    @*}*@
+
+                </tr>
+
+            </tbody>
+        }
+    </table>
+
+
+</section>

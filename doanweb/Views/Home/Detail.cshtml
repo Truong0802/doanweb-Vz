@@ -1,0 +1,60 @@
+﻿@model doanweb.Models.SAN_PHAM
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/product-style.css" rel="stylesheet" />
+<link href="../../Content/css/style.css" rel="stylesheet" />
+
+<section id="product-details" class="section-p1">
+    <div class="single-product-img">
+        <img src="@Html.DisplayFor(model => model.HinhAnhSP)" width="100%" id="main-img" alt="">
+
+        <div class="small-img-group">
+            <div class="small-img-col">
+                <img src="@Html.DisplayFor(model => model.HinhAnhCT1)" width="100%" class="small-img" alt="">
+            </div>
+            <div class="small-img-col">
+                <img src="@Html.DisplayFor(model => model.HinhAnhCT2)" width="100%" class="small-img" alt="">
+            </div>
+            <div class="small-img-col">
+                <img src="@Html.DisplayFor(model => model.HinhAnhCT3)" width="100%" class="small-img" alt="">
+            </div>
+            <div class="small-img-col">
+                <img src="@Html.DisplayFor(model => model.HinhAnhCT4)" width="100%" class="small-img" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="single-product-details">
+        <h6>@Html.DisplayFor(model => model.TenSP)</h6>
+        <h2>@String.Format("{0:0,0}", Model.Gia) VNĐ</h2>
+        @* <div class="quantity-container">
+                <input value="@Html.DisplayFor(model => model.SoLuong)" type="number" class="quantity" id="quantity" min="1" max="@Html.DisplayFor(model => model.SoLuong)" step="1">
+            </div>*@
+        <div class="pay">
+
+            @* <a href="@Url.Action("ChonSanPham","GioHang", new { @idsanpham = Model.MaSP })" class="buy">Mua ngay</a>*@
+            @*@Html.ActionLink("Mua Ngay","BuyNow", "Home", new { idsanpham = Model.MaSP, ttkh = (Session["KhachHang"] as doanweb.Models.KHACH_HANG).MaKH.ToString().TrimEnd(' '), @class = "buy" })*@
+            <form id="cart-form" action='@Url.Action("ChonSanPham","GioHang", new { @idsanpham = Model.MaSP.ToString().TrimEnd(' ') })' method="POST">
+                <button class="submit">Mua ngay</button>
+                @ViewData["ErrorMuaHang"]
+            </form>
+            <form id="cart-form" action='@Url.Action("themGioHang", "GioHang",new { @idaddcart = Html.DisplayFor(model => model.MaSP), @strURL = Request.Url.ToString() })' method="POST">
+                <button class="submit">Thêm vào giỏ hàng</button>
+            </form>
+            @*<a class="submit"
+                href="@Url.Action("themGioHang", "GioHang",new { @idaddcart = Html.DisplayFor(model => model.MaSP), @strURL = Request.Url.ToString() })">Thêm vào giỏ hàng</a>*@
+        </div>
+        <h4>thông tin sản phẩm</h4>
+        <span>
+            @Html.DisplayFor(model => model.GioiThieuSP)
+        </span>
+    </div>
+
+
+</section>
+
+
+<script src="~/Content/js/product-script.js"></script>

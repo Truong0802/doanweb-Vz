@@ -1,0 +1,104 @@
+﻿@model IEnumerable<doanweb.Models.SAN_PHAM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<style>
+    .admin-content {
+        position: relative;
+        display: grid;
+        min-height: 500px;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+    } 
+
+    table tbody tr td img{
+        padding-top: 20px;
+    }
+
+    .detail {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: none;
+        grid-gap: 30px;
+        /* margin-top: 10px; */
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    button {
+        width: 130px;
+        padding: 7px 7px;
+        background: #287bff;
+        text-decoration: none;
+        color: var(--white);
+        border-radius: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    table thead tr td{
+        font-size: 18px;
+    }
+</style>
+
+<link href="~/Content/css/product-style.css" rel="stylesheet" />
+
+<div class="detail">
+    <div class="admin-content">
+        <div class="recentProducts">
+            <div class="cardHeader">
+                <h2>Danh sách sản phẩm</h2>
+                <a href="@Url.Action("Create", "Products")" class="btn">Thêm sản phẩm</a>
+            </div>
+            @*<div class="search">
+                <label>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                    <ion-icon name="search-outline"></ion-icon>
+                </label>
+            </div>*@
+                <br />
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Mã sản phẩm</td>
+                            <td>Thương hiệu</td>
+                            <td>Loại sản phẩm</td>
+                            <td>Hình ảnh</td>
+                            <td>Tên sản phẩm</td>
+                            <td>Giá</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.MaSP</td>
+                                <td>@item.THUONG_HIEU.TenTH</td>
+                                <td>@item.Loai_SP.TenLoai</td>
+                                <td><img src="@item.HinhAnhSP" width="200" alt=""></td>
+                                <td>@item.TenSP </td>
+                                <td>@String.Format("{0:0,0}", item.Gia)</td>
+                                <td><a href="@Url.Action("Edit", "Products", new { id = item.MaSP.ToString().TrimEnd() })">Chi tiết</a></td>
+                                <td><a href="@Url.Action("Delete", "Products", new { id = item.MaSP.ToString().TrimEnd() })">Xóa sản phẩm</a></td>
+                            </tr>
+                        </tbody>
+                    }
+                    </table>
+        </div>
+    </div>
+</div>

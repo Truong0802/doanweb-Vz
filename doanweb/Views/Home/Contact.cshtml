@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Giới thiệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<style>
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .col-lg-4,
+    .col-md-4,
+    .col-sm-6,
+    .col-xs-12 {
+        padding: 10px;
+    }
+
+    .panel {
+        box-shadow: 2px 2px 5px #999;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 450px;
+    }
+
+    .product .img-container {
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .product img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .design {
+        text-align: center;
+        padding: 20px;
+    }
+
+        .design h5 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .design h4 {
+            font-size: 24px;
+            color: #f00;
+        }
+
+    .MenuTrang {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 90px;
+    }
+
+        .MenuTrang .pagination {
+            margin: 0;
+        }
+
+            .MenuTrang .pagination li {
+                display: inline-block;
+                margin: 0 5px;
+            }
+
+                .MenuTrang .pagination li a {
+                    color: #333;
+                    display: inline-block;
+                    padding: 5px 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+
+                .MenuTrang .pagination li.active a {
+                    background-color: #333;
+                    color: #fff;
+                }
+
+                .MenuTrang .pagination li.disabled a {
+                    color: #ccc;
+                }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<section>
+    
+    <div class="row">
+        <h2>THÔNG TIN</h2>
+        <div class="product-container">
+              <h2>Nhà phân phối chính hãng Kit các loại (Gundam/Bàn phím) tại Việt Nam</h2>
+        </div>
+    </div>
+
+    
+</section>

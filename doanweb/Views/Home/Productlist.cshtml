@@ -1,0 +1,211 @@
+﻿@model  PagedList.IPagedList<doanweb.Models.SAN_PHAM>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Productlist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<style>
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .col-lg-4,
+    .col-md-4,
+    .col-sm-6,
+    .col-xs-12 {
+        padding: 10px;
+    }
+
+    .panel {
+        box-shadow: 2px 2px 5px #999;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 450px;
+    }
+
+    .product .img-container {
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .product img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .design {
+        text-align: center;
+        padding: 20px;
+    }
+
+        .design h5 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .design h4 {
+            font-size: 24px;
+            color: #f00;
+        }
+
+    .MenuTrang {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 90px;
+    }
+
+        .MenuTrang .pagination {
+            margin: 0;
+        }
+
+            .MenuTrang .pagination li {
+                display: inline-block;
+                margin: 0 5px;
+            }
+
+                .MenuTrang .pagination li a {
+                    color: #333;
+                    display: inline-block;
+                    padding: 5px 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+
+                .MenuTrang .pagination li.active a {
+                    background-color: #333;
+                    color: #fff;
+                }
+
+                .MenuTrang .pagination li.disabled a {
+                    color: #ccc;
+                }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .dropdownlist {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+        .dropdownlist .form-group {
+            margin-right: 10px;
+        }
+
+        .dropdownlist select {
+            margin-right: 10px;
+        }
+
+</style>
+
+<section>
+
+    <div class="dropdownlist">
+        @using (Html.BeginForm("Productlist", "Home", FormMethod.Get, new { @class = "form-inline" }))
+        {
+
+            <div class="form-group form-inline" style="display: flex;">
+                @Html.DropDownList("categoryid", ViewBag.Loai as SelectList, "Chọn loại mặt hàng")
+                @Html.DropDownList("categorytypeid", ViewBag.PLoai as SelectList, "Chọn loại sản phẩm")
+                @Html.DropDownList("brandid", ViewBag.TH as SelectList, "Chọn loại thương hiệu")
+
+                @*<input type="Text" class="form-control col-md-10" value="@ViewBag.Keyword"
+                    name="searchString" placeholder="Nhập tên figure...">*@
+                <input class="submit-btn" type="submit" style="margin-right:10px;">
+
+            </div>
+            <br>
+        }
+    </div>
+    <div class="row">
+
+
+        <div class="product-container">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="product">
+                            <div class="img-container">
+                                <a href="@Url.Action("Detail", "Home", new { id = item.MaSP.ToString().TrimEnd(' ')})">
+                                    <img src="@item.HinhAnhSP" alt="">
+                                </a>
+                            </div>
+                            <div class="design">
+                                <a href="@Url.Action("Detail", "Home", new { id = item.MaSP.ToString().TrimEnd(' ')})">
+                                    <h5>@item.TenSP</h5>
+                                </a>
+                                <h4>@String.Format("{0:0,0}", item.Gia)</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div>
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("Productlist", new
+            {
+                page = page
+            }))
+        </div>
+    </div>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var maxLength = 100;
+        $(".show-read-more").each(function () {
+            var myStr = $(this).text();
+            if ($.trim(myStr).length > maxLength) {
+                var newStr = myStr.substring(0, maxLength);
+                var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                $(this).empty().html(newStr);
+                $(this).append(' <a href="javascript:void(0);" class="read-more">đọc tiếp...</a > ');
+                $(this).append('<span class="more-text">' + removedStr + '</span>');
+            }
+        });
+        $(".read-more").click(function () {
+            $(this).siblings(".more-text").contents().unwrap();
+            $(this).remove();
+        });
+    });
+</script>
+<style>
+    .show-read-more .more-text {
+        display: none;
+    }
+</style>
+@*<script>
+    $("#categoryid").change(function () {
+        $("input[type=submit]").click();
+
+    });
+    $("#categorytypeid").change(function () {
+        $("input[type=submit]").click();
+
+    });
+    $("#brandid").change(function () {
+        $("input[type=submit]").click();
+
+    });
+</script>*@
